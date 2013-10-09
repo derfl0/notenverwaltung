@@ -9,10 +9,19 @@ class ShowController extends StudipController {
     }
 
     public function index_action() {
+        
+        if (Request::submitted('save')) {
+            Notenverwaltung::deleteBySQL('Seminar_id = ?', array($GLOBALS['SessionSeminar']));
+            foreach(Request::getArray('user') as $user) {
+                $new = new Notenverwaltung(array($user, $GLOBALS['SessionSeminar']));
+                $new->store();
+            }
+        }
+        
         $this->sem = new Course($GLOBALS['SessionSeminar']);
         $this->users = new SimpleCollection($this->sem->members->pluck('user'));
         $this->users->orderBy('Nachname');
-        $this->noten = new Notenverwaltung::findBySQL('seminar_id = ?', array($GLOBALS['SessionSeminar']));
+        $this->noten = new SimpleCollection(Notenverwaltung::findBySeminar_id($GLOBALS['SessionSeminar']));
     }
 
     // customized #url_for for plugins
