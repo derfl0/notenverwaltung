@@ -3,3 +3,5 @@ pluginclassname=NotenverwaltungPlugin
 origin=intelec
 version=1
 studipMinVersion=2.4
+dbscheme=install.sql
+uninstalldbscheme=uninstall.sql
