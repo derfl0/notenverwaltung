@@ -1,8 +1,7 @@
 $(document).ready(function() {
-    $('.checkboxActive tr').click(function() {
-        if (!$(this).is("input")) {
-            var box = $(this).find(':input');
-            box.prop('checked', !box.prop('checked'));
+    $('.checkboxActive tr').click(function(event) {
+        if (event.target.type !== 'checkbox') {
+            $(':checkbox', this).trigger('click');
         }
         checkColor();
     });
@@ -16,6 +15,6 @@ $(document).ready(function() {
             }
         });
     }
-    
+
     checkColor();
 });
